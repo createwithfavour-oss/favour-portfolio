@@ -834,6 +834,61 @@
             font-weight: 500;
         }
 
+        /* Case study deliverables with images */
+        .case-deliverable {
+            margin-bottom: 32px;
+        }
+
+        .case-deliverable-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text);
+        }
+
+        .case-deliverable-desc {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: 12px;
+        }
+
+        .case-screenshot {
+            width: 100%;
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            margin-top: 8px;
+            transition: border-color var(--transition);
+        }
+
+        .case-screenshot:hover {
+            border-color: rgba(201, 255, 87, 0.2);
+        }
+
+        .case-deliverable-list {
+            list-style: none;
+            margin-bottom: 12px;
+        }
+
+        .case-deliverable-list li {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            padding: 4px 0;
+        }
+
+        .case-deliverable-list li::before {
+            content: '';
+            width: 4px;
+            height: 4px;
+            background: var(--accent);
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
         /* ── Marquee / Ticker ── */
         .marquee-section {
             padding: 40px 0;
@@ -1356,19 +1411,50 @@
     const caseStudies = {
         emergi: {
             number: '01',
-            title: 'User Growth for Emergi Mentors',
+            title: 'Community Building & Event Strategy for Emergi Mentors',
             client: 'Emergi Mentors',
             location: 'Australia',
-            services: ['Marketing Strategy', 'Content Creation', 'Automation'],
+            services: ['Marketing Strategy', 'Content Creation', 'Automation', 'Email Marketing', 'Community Building'],
             heroMetric: '185',
             heroMetricLabel: 'Active users in 3 months',
-            challenge: `Emergi Mentors, an Australian-based mentorship platform, needed to build an engaged community from scratch and drive consistent user growth. The challenge was not just acquiring users — it was creating a self-sustaining ecosystem where mentors and mentees actively participated and returned week after week.`,
-            approach: `I developed a multi-channel content strategy centered around community building. This included launching and managing a Slack community with curated onboarding sequences, creating a content calendar for consistent touchpoints, and orchestrating virtual events designed to convert passive followers into active participants. I also implemented marketing automation workflows to nurture leads through the funnel.`,
+            challenge: `Emergi Mentors needed to build an engaged community and drive platform transactions while their core product was still in development. The challenge was creating meaningful connections between mentors and mentees, generating leads through events, and maintaining community engagement across different time zones.`,
+            approach: `I developed a comprehensive community-building strategy centered on three key pillars:`,
+            approachPillars: [
+                '<strong>Community Development:</strong> Built and managed a Slack community to foster mentor-mentee connections while the product was being finalized',
+                '<strong>Event-Driven Growth:</strong> Orchestrated high-value virtual events featuring industry experts to attract and engage potential users',
+                '<strong>Email Marketing & Automation:</strong> Implemented targeted email campaigns and automation workflows to nurture leads and drive conversions'
+            ],
+            deliverables: [
+                {
+                    title: 'Community Building & Management',
+                    items: ['Slack community setup and moderation (65 active members)', 'Mentor-mentee matching system development', 'Cross-timezone engagement strategies', 'Community guidelines and onboarding processes'],
+                    image: 'images/emergi-community-growth.png',
+                    imageAlt: 'Community growth metrics'
+                },
+                {
+                    title: 'Webinar Event Strategy & Execution',
+                    items: ['Virtual event planning and promotion', 'Speaker coordination and content development', 'Registration and attendance optimization', 'Post-event follow-up sequences'],
+                    image: 'images/emergi-event-performance.png',
+                    imageAlt: 'Event performance metrics'
+                },
+                {
+                    title: 'Email Marketing Campaigns',
+                    items: ['Automated email sequences for event registrations', 'Lead nurturing campaigns for mentor-mentee matching', 'Newsletter campaigns for community engagement', 'Performance tracking and optimization'],
+                    image: 'images/emergi-email-campaigns.png',
+                    imageAlt: 'Email campaign performance'
+                },
+                {
+                    title: 'Marketing Automation',
+                    items: ['Zapier workflow setup for lead management', 'Event registration and follow-up automation', 'CRM integration for lead tracking', 'Performance analytics and reporting'],
+                    image: 'images/emergi-automation.png',
+                    imageAlt: 'Automation workflows'
+                }
+            ],
             results: [
-                { value: '185', label: 'Active users acquired' },
+                { value: '185', label: 'Active email subscribers' },
                 { value: '65', label: 'Slack community members' },
-                { value: '90', label: 'Event registrants per session' },
-                { value: '52%', label: 'Attendance rate (vs 40% avg)' }
+                { value: '52%', label: 'Event attendance rate' },
+                { value: '48.9%', label: 'Email open rate' }
             ]
         },
         redcloud: {
@@ -1376,16 +1462,41 @@
             title: 'Pre-IPO Content Strategy for RedCloud',
             client: 'RedCloud Technology',
             location: 'London, United Kingdom',
-            services: ['Marketing Strategy', 'Content Creation'],
+            services: ['Marketing Strategy', 'Content Creation', 'PR Coordination', 'SEO', 'Brand Messaging'],
             heroMetric: '+15%',
             heroMetricLabel: 'Solution inquiry increase',
-            challenge: `RedCloud, a London-based fintech company preparing for a potential IPO, needed content that could speak to two very different audiences simultaneously: enterprise clients evaluating their platform, and institutional investors assessing their market position. The existing content wasn't capturing the company's strategic vision or market opportunity.`,
-            approach: `I created a dual-track content strategy. For the enterprise audience, I developed solution-oriented messaging that clearly articulated RedCloud's value proposition in the open commerce space. For investors, I crafted thought leadership content and market narratives positioning RedCloud as a category leader. Every piece was optimized for SEO to compound visibility over time.`,
+            challenge: `RedCloud Technology, a B2B SaaS platform with their proprietary "Open Commerce Platform" was preparing for a NASDAQ IPO while simultaneously expanding into new markets. They needed a comprehensive content strategy that would appeal to investors, raise brand awareness, and generate qualified leads.`,
+            approach: `I collaborated with key stakeholders and developed a multi-faceted content strategy focused on positioning RedCloud as "a new way to trade for the next billion retailers" in emerging markets. The strategy had 3 main pillars:`,
+            approachPillars: [
+                '<strong>Investor-Facing Content:</strong> Created compelling investor-facing content including one-pagers, blog posts, and social media content highlighting RedCloud\'s unique value proposition and growth potential',
+                '<strong>Brand Messaging Framework:</strong> Identified and built content around strategic topics including supply chains, emerging markets, sustainability, and FMCG growth',
+                '<strong>PR Coordination:</strong> Led PR efforts to secure feature articles in major tech and supply chain publications'
+            ],
+            deliverables: [
+                {
+                    title: 'Investor Relations Support',
+                    items: ['Web copy for investor relations website', 'Documentation for external press releases', 'Supporting content for investor communications'],
+                    image: 'images/redcloud-investor-site.png',
+                    imageAlt: 'RedCloud investor website'
+                },
+                {
+                    title: 'Website Optimization',
+                    items: ['Complete website copy revision', 'SEO-optimized product descriptions', 'Solution pages for key vertical markets'],
+                    image: 'images/redcloud-website.png',
+                    imageAlt: 'RedCloud main website'
+                },
+                {
+                    title: 'PR Management & Media Coverage',
+                    items: ['Media outreach coordination', 'Content guidelines for external publications', 'Press release development and distribution', 'Featured in major tech publications across USA, UK, Africa and Latin America'],
+                    image: 'images/redcloud-pr-articles.png',
+                    imageAlt: 'Live PR articles'
+                }
+            ],
             results: [
                 { value: '+15%', label: 'Solution inquiry increase' },
-                { value: 'EU & US', label: 'Investor attention captured' },
-                { value: 'Pre-IPO', label: 'Content positioning achieved' },
-                { value: 'Dual', label: 'Audience strategy deployed' }
+                { value: '+70%', label: 'Content engagement lift' },
+                { value: 'Global', label: 'PR coverage achieved' },
+                { value: 'NASDAQ', label: 'IPO content positioned' }
             ]
         },
         salsa: {
@@ -1393,11 +1504,12 @@
             title: 'Award-winning Case Studies for Salsa Digital',
             client: 'Salsa Digital',
             location: 'Australia',
-            services: ['Content Creation'],
+            services: ['Content Creation', 'SEO'],
             heroMetric: '+20%',
             heroMetricLabel: 'Organic visibility increase',
             challenge: `Salsa Digital, a leading Australian digital agency, had an impressive portfolio of government and enterprise projects but lacked the case studies to showcase their impact. They needed compelling narratives that could win awards, drive organic traffic, and serve as sales enablement tools — all at once.`,
-            approach: `I conducted in-depth interviews with project stakeholders and extracted the key metrics and narratives from each engagement. Each case study was structured around the challenge-approach-results framework, optimized for target keywords, and written to meet the stringent criteria of Australian state and national digital awards. I ensured each piece told a story that resonated emotionally while being backed by hard data.`,
+            approach: `I conducted in-depth interviews with project stakeholders and extracted the key metrics and narratives from each engagement. Each case study was structured around the challenge-approach-results framework, optimized for target keywords, and written to meet the stringent criteria of Australian state and national digital awards.`,
+            deliverables: [],
             results: [
                 { value: '10+', label: 'Case studies created' },
                 { value: '3', label: 'Featured on awards pages' },
@@ -1416,6 +1528,23 @@
     function openCase(key) {
         const cs = caseStudies[key];
         if (!cs) return;
+
+        const pillarsHTML = cs.approachPillars ? `<ol style="list-style:none;counter-reset:pillars;margin-top:12px;">${cs.approachPillars.map(p => `<li style="color:var(--text-muted);font-size:0.95rem;line-height:1.8;margin-bottom:8px;padding-left:0;">${p}</li>`).join('')}</ol>` : '';
+
+        const deliverablesHTML = cs.deliverables && cs.deliverables.length > 0 ? `
+            <div class="case-section">
+                <div class="case-section-title">Key Deliverables</div>
+                ${cs.deliverables.map(d => `
+                    <div class="case-deliverable">
+                        <div class="case-deliverable-title">${d.title}</div>
+                        <ul class="case-deliverable-list">
+                            ${d.items.map(item => `<li>${item}</li>`).join('')}
+                        </ul>
+                        ${d.image ? `<img class="case-screenshot" src="${d.image}" alt="${d.imageAlt}" loading="lazy" />` : ''}
+                    </div>
+                `).join('')}
+            </div>
+        ` : '';
 
         panelContent.innerHTML = `
             <div class="case-hero-metric">
@@ -1445,7 +1574,10 @@
             <div class="case-section">
                 <div class="case-section-title">The Approach</div>
                 <p>${cs.approach}</p>
+                ${pillarsHTML}
             </div>
+
+            ${deliverablesHTML}
 
             <div class="case-section">
                 <div class="case-section-title">Key Results</div>
