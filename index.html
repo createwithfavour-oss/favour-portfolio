@@ -1,0 +1,1607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Favour Yusuf — Content Marketing Strategist</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=DM+Sans:ital,wght@0,400;0,500;1,400&display=swap');
+
+        /* ── Reset & Base ── */
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg: #0a0a0a;
+            --surface: #111111;
+            --surface-2: #1a1a1a;
+            --border: #222222;
+            --text: #f0f0f0;
+            --text-muted: #888888;
+            --accent: #c9ff57;
+            --accent-dim: rgba(201, 255, 87, 0.08);
+            --radius: 12px;
+            --transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'DM Sans', -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body.overlay-open { overflow: hidden; }
+
+        ::selection {
+            background: var(--accent);
+            color: var(--bg);
+        }
+
+        a { color: inherit; text-decoration: none; }
+
+        /* ── Noise texture overlay ── */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        /* ── Cursor glow ── */
+        .cursor-glow {
+            position: fixed;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(201, 255, 87, 0.04) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+            transform: translate(-50%, -50%);
+            transition: opacity 0.3s;
+        }
+
+        /* ── Nav ── */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            background: rgba(10, 10, 10, 0.7);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-logo {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 600;
+            font-size: 1.1rem;
+            letter-spacing: -0.02em;
+        }
+
+        .nav-logo span { color: var(--accent); }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            transition: color var(--transition);
+            letter-spacing: 0.03em;
+            text-transform: uppercase;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover { color: var(--accent); }
+
+        .nav-cta {
+            padding: 10px 24px;
+            background: var(--accent);
+            color: var(--bg);
+            border-radius: 100px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: transform var(--transition), box-shadow var(--transition);
+            cursor: pointer;
+            border: none;
+            font-family: inherit;
+        }
+
+        .nav-cta:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(201, 255, 87, 0.3);
+        }
+
+        /* ── Hero ── */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 120px 40px 80px;
+            position: relative;
+        }
+
+        .hero-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .hero-text { position: relative; }
+
+        .hero-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 16px;
+            background: var(--accent-dim);
+            border: 1px solid rgba(201, 255, 87, 0.15);
+            border-radius: 100px;
+            font-size: 0.8rem;
+            color: var(--accent);
+            margin-bottom: 32px;
+            font-weight: 500;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+        }
+
+        .hero-tag .pulse {
+            width: 6px;
+            height: 6px;
+            background: var(--accent);
+            border-radius: 50%;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.5); }
+        }
+
+        .hero h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(3rem, 6vw, 5rem);
+            font-weight: 700;
+            line-height: 1.05;
+            letter-spacing: -0.04em;
+            margin-bottom: 24px;
+        }
+
+        .hero h1 .line {
+            display: block;
+            overflow: hidden;
+        }
+
+        .hero h1 .line-inner {
+            display: block;
+            transform: translateY(110%);
+            animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .hero h1 .line:nth-child(2) .line-inner { animation-delay: 0.1s; }
+        .hero h1 .line:nth-child(3) .line-inner { animation-delay: 0.2s; }
+
+        @keyframes slideUp {
+            to { transform: translateY(0); }
+        }
+
+        .hero h1 em {
+            font-style: italic;
+            color: var(--accent);
+            position: relative;
+        }
+
+        .hero-desc {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            max-width: 480px;
+            line-height: 1.7;
+            margin-bottom: 40px;
+            opacity: 0;
+            animation: fadeIn 0.8s 0.5s forwards;
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 48px;
+            opacity: 0;
+            animation: fadeIn 0.8s 0.7s forwards;
+        }
+
+        .stat { position: relative; }
+
+        .stat-number {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--accent);
+            line-height: 1;
+            display: flex;
+            align-items: baseline;
+        }
+
+        .stat-number .counter { display: inline-block; }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+        }
+
+        /* Hero image area */
+        .hero-visual {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            animation: fadeIn 1s 0.3s forwards;
+        }
+
+        .hero-image-wrapper {
+            position: relative;
+            width: 380px;
+            height: 460px;
+            border-radius: 24px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+
+        .hero-image-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: top center;
+            filter: grayscale(20%);
+            transition: filter var(--transition);
+        }
+
+        .hero-image-wrapper:hover img {
+            filter: grayscale(0%);
+        }
+
+        .hero-image-wrapper::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, transparent 50%, rgba(10, 10, 10, 0.6));
+        }
+
+        /* Floating badges around image */
+        .float-badge {
+            position: absolute;
+            padding: 10px 18px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            white-space: nowrap;
+            animation: float 6s ease-in-out infinite;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+        }
+
+        .float-badge:nth-child(2) { top: 15%; right: -30px; animation-delay: -2s; }
+        .float-badge:nth-child(3) { bottom: 25%; left: -40px; animation-delay: -4s; }
+        .float-badge:nth-child(4) { bottom: 10%; right: -20px; animation-delay: -1s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-12px); }
+        }
+
+        /* ── Section base ── */
+        section {
+            padding: 120px 40px;
+            position: relative;
+        }
+
+        .section-header {
+            max-width: 1200px;
+            margin: 0 auto 64px;
+        }
+
+        .section-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--accent);
+            margin-bottom: 16px;
+            font-weight: 600;
+        }
+
+        .section-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            line-height: 1.1;
+        }
+
+        /* ── Skills ── */
+        .skills-section { background: var(--bg); }
+
+        .skills-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .skill-category {
+            padding: 36px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            transition: border-color var(--transition), transform var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .skill-category::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--accent);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform var(--transition);
+        }
+
+        .skill-category:hover {
+            border-color: rgba(201, 255, 87, 0.2);
+            transform: translateY(-4px);
+        }
+
+        .skill-category:hover::before { transform: scaleX(1); }
+
+        .skill-cat-icon {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--accent-dim);
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+
+        .skill-cat-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.15rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            letter-spacing: -0.01em;
+        }
+
+        .skill-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .skill-list li {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            transition: color var(--transition);
+        }
+
+        .skill-list li::before {
+            content: '';
+            width: 4px;
+            height: 4px;
+            background: var(--accent);
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .skill-category:hover .skill-list li { color: var(--text); }
+
+        /* ── Projects ── */
+        .projects-section {
+            background: var(--surface);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .projects-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+        }
+
+        .project-card {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: border-color var(--transition), transform var(--transition);
+            position: relative;
+            cursor: pointer;
+        }
+
+        .project-card:hover {
+            border-color: rgba(201, 255, 87, 0.2);
+            transform: translateY(-4px);
+        }
+
+        .project-info {
+            padding: 48px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .project-number {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.8rem;
+            color: var(--accent);
+            margin-bottom: 16px;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+        }
+
+        .project-name {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+            margin-bottom: 16px;
+        }
+
+        .project-desc {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.7;
+            margin-bottom: 24px;
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .project-tag {
+            padding: 5px 14px;
+            background: var(--accent-dim);
+            border: 1px solid rgba(201, 255, 87, 0.12);
+            border-radius: 100px;
+            font-size: 0.75rem;
+            color: var(--accent);
+            font-weight: 500;
+        }
+
+        .project-meta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .project-location {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .project-read-more {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.8rem;
+            color: var(--accent);
+            font-weight: 500;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            transition: gap var(--transition);
+        }
+
+        .project-card:hover .project-read-more { gap: 10px; }
+
+        .project-visual {
+            position: relative;
+            min-height: 320px;
+            background: var(--surface-2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .project-visual-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .project-metric {
+            text-align: center;
+        }
+
+        .project-metric-value {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 4.5rem;
+            font-weight: 700;
+            color: var(--accent);
+            line-height: 1;
+            letter-spacing: -0.04em;
+        }
+
+        .project-metric-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        /* Animated gradient blobs in project visuals */
+        .project-visual::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            top: -50%;
+            left: -50%;
+            background: radial-gradient(ellipse at 30% 50%, rgba(201, 255, 87, 0.06) 0%, transparent 50%),
+                        radial-gradient(ellipse at 70% 50%, rgba(201, 255, 87, 0.04) 0%, transparent 50%);
+            animation: drift 12s ease-in-out infinite;
+        }
+
+        @keyframes drift {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            33% { transform: translate(2%, 1%) rotate(1deg); }
+            66% { transform: translate(-1%, -2%) rotate(-1deg); }
+        }
+
+        .project-card:nth-child(even) { direction: rtl; }
+        .project-card:nth-child(even) > * { direction: ltr; }
+
+        /* ── Case Study Overlay ── */
+        .case-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 1000;
+            pointer-events: none;
+            opacity: 0;
+        }
+
+        .case-overlay.active {
+            pointer-events: all;
+            opacity: 1;
+        }
+
+        .case-overlay-backdrop {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .case-overlay.active .case-overlay-backdrop {
+            opacity: 1;
+        }
+
+        .case-panel {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: min(720px, 100%);
+            height: 100%;
+            background: var(--bg);
+            border-left: 1px solid var(--border);
+            overflow-y: auto;
+            transform: translateX(100%);
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .case-overlay.active .case-panel {
+            transform: translateX(0);
+        }
+
+        .case-panel-close {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 24px 40px;
+            background: rgba(10, 10, 10, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .case-panel-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .close-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            font-family: inherit;
+            cursor: pointer;
+            transition: color var(--transition), border-color var(--transition);
+        }
+
+        .close-btn:hover {
+            color: var(--text);
+            border-color: var(--text-muted);
+        }
+
+        .case-panel-content {
+            padding: 48px 40px 80px;
+        }
+
+        .case-hero-metric {
+            padding: 48px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            text-align: center;
+            margin-bottom: 48px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .case-hero-metric::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            top: -50%;
+            left: -50%;
+            background: radial-gradient(ellipse at 40% 40%, rgba(201, 255, 87, 0.06) 0%, transparent 50%);
+            animation: drift 12s ease-in-out infinite;
+        }
+
+        .case-hero-metric .metric-val {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 5rem;
+            font-weight: 700;
+            color: var(--accent);
+            line-height: 1;
+            letter-spacing: -0.04em;
+            position: relative;
+        }
+
+        .case-hero-metric .metric-label {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-top: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            position: relative;
+        }
+
+        .case-number {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.8rem;
+            color: var(--accent);
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            margin-bottom: 12px;
+        }
+
+        .case-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2.2rem;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            line-height: 1.15;
+            margin-bottom: 12px;
+        }
+
+        .case-client-info {
+            display: flex;
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        .case-client-detail {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .case-section {
+            margin-bottom: 40px;
+        }
+
+        .case-section-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--accent);
+            margin-bottom: 16px;
+            font-weight: 600;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .case-section p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.8;
+            margin-bottom: 12px;
+        }
+
+        .case-results-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+
+        .case-result-card {
+            padding: 24px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            transition: border-color var(--transition);
+        }
+
+        .case-result-card:hover {
+            border-color: rgba(201, 255, 87, 0.2);
+        }
+
+        .case-result-value {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--accent);
+            line-height: 1;
+            margin-bottom: 6px;
+        }
+
+        .case-result-label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .case-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .case-tag {
+            padding: 6px 16px;
+            background: var(--accent-dim);
+            border: 1px solid rgba(201, 255, 87, 0.12);
+            border-radius: 100px;
+            font-size: 0.8rem;
+            color: var(--accent);
+            font-weight: 500;
+        }
+
+        /* ── Marquee / Ticker ── */
+        .marquee-section {
+            padding: 40px 0;
+            overflow: hidden;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            background: var(--bg);
+        }
+
+        .marquee-track {
+            display: flex;
+            animation: marquee 30s linear infinite;
+            width: max-content;
+        }
+
+        .marquee-track:hover { animation-play-state: paused; }
+
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        .marquee-item {
+            padding: 0 48px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 48px;
+        }
+
+        .marquee-item::after {
+            content: '✦';
+            color: var(--accent);
+            font-size: 0.8rem;
+        }
+
+        /* ── Contact / CTA ── */
+        .contact-section {
+            text-align: center;
+            padding: 160px 40px;
+        }
+
+        .contact-inner {
+            max-width: 640px;
+            margin: 0 auto;
+        }
+
+        .contact-inner .section-title {
+            margin-bottom: 20px;
+        }
+
+        .contact-desc {
+            color: var(--text-muted);
+            font-size: 1.05rem;
+            margin-bottom: 48px;
+            line-height: 1.7;
+        }
+
+        .contact-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 18px 40px;
+            background: var(--accent);
+            color: var(--bg);
+            border-radius: 100px;
+            font-size: 1rem;
+            font-weight: 600;
+            font-family: 'Space Grotesk', sans-serif;
+            letter-spacing: -0.01em;
+            transition: transform var(--transition), box-shadow var(--transition);
+            cursor: pointer;
+            border: none;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 60px rgba(201, 255, 87, 0.3);
+        }
+
+        .contact-btn .arrow {
+            transition: transform var(--transition);
+        }
+
+        .contact-btn:hover .arrow {
+            transform: translateX(4px);
+        }
+
+        /* ── Footer ── */
+        footer {
+            padding: 40px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-left {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 24px;
+        }
+
+        .footer-links a {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            transition: color var(--transition);
+        }
+
+        .footer-links a:hover { color: var(--accent); }
+
+        /* ── Scroll reveal ── */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+                        transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .reveal-delay-1 { transition-delay: 0.1s; }
+        .reveal-delay-2 { transition-delay: 0.2s; }
+        .reveal-delay-3 { transition-delay: 0.3s; }
+
+        /* ── Smooth scrollbar ── */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--bg); }
+        ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+
+        /* ── Mobile nav toggle ── */
+        .nav-toggle {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 8px;
+            z-index: 101;
+        }
+
+        .nav-toggle span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: var(--text);
+            margin: 5px 0;
+            transition: var(--transition);
+        }
+
+        .nav-toggle.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+        .nav-toggle.active span:nth-child(2) { opacity: 0; }
+        .nav-toggle.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
+        }
+
+        /* ── Responsive ── */
+        @media (max-width: 900px) {
+            nav { padding: 16px 24px; }
+
+            .nav-toggle { display: block; }
+
+            .nav-links {
+                position: fixed;
+                inset: 0;
+                background: var(--bg);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 40px;
+                opacity: 0;
+                pointer-events: none;
+                transition: opacity 0.3s;
+            }
+
+            .nav-links.open {
+                opacity: 1;
+                pointer-events: all;
+            }
+
+            .nav-links a {
+                font-size: 1.4rem;
+            }
+
+            .nav-cta { display: none; }
+
+            .hero { padding: 100px 24px 60px; }
+
+            .hero-inner {
+                grid-template-columns: 1fr;
+                gap: 48px;
+                text-align: center;
+            }
+
+            .hero-desc { margin-left: auto; margin-right: auto; }
+
+            .hero-stats { justify-content: center; }
+
+            .hero-visual { order: -1; }
+
+            .hero-image-wrapper {
+                width: 280px;
+                height: 340px;
+            }
+
+            .float-badge { display: none; }
+
+            section { padding: 80px 24px; }
+
+            .skills-grid { grid-template-columns: 1fr; }
+
+            .project-card {
+                grid-template-columns: 1fr;
+            }
+
+            .project-card:nth-child(even) { direction: ltr; }
+
+            .project-info { padding: 32px; }
+
+            .project-visual { min-height: 200px; }
+
+            .project-metric-value { font-size: 3rem; }
+
+            /* Case study overlay mobile */
+            .case-panel { width: 100%; }
+            .case-panel-content { padding: 32px 24px 60px; }
+            .case-panel-close { padding: 20px 24px; }
+            .case-title { font-size: 1.6rem; }
+            .case-hero-metric .metric-val { font-size: 3.5rem; }
+            .case-results-grid { grid-template-columns: 1fr; }
+            .case-client-info { flex-direction: column; gap: 8px; }
+
+            footer {
+                flex-direction: column;
+                gap: 16px;
+                text-align: center;
+                padding: 32px 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="cursor-glow" id="cursorGlow"></div>
+
+<!-- ── Nav ── -->
+<nav>
+    <div class="nav-logo">favour<span>.</span></div>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="navLinks">
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#projects">Work</a></li>
+        <li><a href="#contact">Contact</a></li>
+    </ul>
+    <a href="mailto:hello@favouryusuf.com" class="nav-cta">Let's talk</a>
+</nav>
+
+<!-- ── Hero ── -->
+<section class="hero">
+    <div class="hero-inner">
+        <div class="hero-text">
+            <div class="hero-tag">
+                <span class="pulse"></span>
+                Available for projects
+            </div>
+            <h1>
+                <span class="line"><span class="line-inner">Content that</span></span>
+                <span class="line"><span class="line-inner">drives <em>revenue,</em></span></span>
+                <span class="line"><span class="line-inner">not just traffic.</span></span>
+            </h1>
+            <p class="hero-desc">
+                I'm Favour — a content marketing strategist with 7+ years turning content from a 'nice-to-have' into a measurable acquisition channel for B2B SaaS and fintech startups.
+            </p>
+            <div class="hero-stats">
+                <div class="stat">
+                    <div class="stat-number"><span class="counter" data-target="70">0</span>%</div>
+                    <div class="stat-label">Engagement lift</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number"><span class="counter" data-target="40">0</span>%</div>
+                    <div class="stat-label">Conversion boost</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number"><span class="counter" data-target="7">0</span>+</div>
+                    <div class="stat-label">Years experience</div>
+                </div>
+            </div>
+        </div>
+        <div class="hero-visual">
+            <div class="hero-image-wrapper">
+                <img src="Professional picture Favour Yusuf.jpg" alt="Favour Yusuf" />
+            </div>
+            <div class="float-badge" style="top: 8%; left: -35px;">B2B SaaS</div>
+            <div class="float-badge">Fintech</div>
+            <div class="float-badge">Content Strategy</div>
+        </div>
+    </div>
+</section>
+
+<!-- ── Marquee ── -->
+<div class="marquee-section">
+    <div class="marquee-track">
+        <span class="marquee-item">Content Strategy</span>
+        <span class="marquee-item">SEO & Keywords</span>
+        <span class="marquee-item">Brand Storytelling</span>
+        <span class="marquee-item">Technical Writing</span>
+        <span class="marquee-item">Go-to-Market</span>
+        <span class="marquee-item">Marketing Automation</span>
+        <span class="marquee-item">Product Messaging</span>
+        <span class="marquee-item">Competitive Analysis</span>
+        <span class="marquee-item">Content Strategy</span>
+        <span class="marquee-item">SEO & Keywords</span>
+        <span class="marquee-item">Brand Storytelling</span>
+        <span class="marquee-item">Technical Writing</span>
+        <span class="marquee-item">Go-to-Market</span>
+        <span class="marquee-item">Marketing Automation</span>
+        <span class="marquee-item">Product Messaging</span>
+        <span class="marquee-item">Competitive Analysis</span>
+    </div>
+</div>
+
+<!-- ── Skills ── -->
+<section class="skills-section" id="skills">
+    <div class="section-header reveal">
+        <div class="section-label">What I do</div>
+        <h2 class="section-title">Expertise across the full<br>content marketing stack.</h2>
+    </div>
+    <div class="skills-grid">
+        <div class="skill-category reveal reveal-delay-1">
+            <div class="skill-cat-icon">✍</div>
+            <h3 class="skill-cat-title">Content Creation</h3>
+            <ul class="skill-list">
+                <li>Content Strategy</li>
+                <li>Product Messaging</li>
+                <li>Technical Writing</li>
+                <li>Brand Storytelling</li>
+            </ul>
+        </div>
+        <div class="skill-category reveal reveal-delay-2">
+            <div class="skill-cat-icon">📐</div>
+            <h3 class="skill-cat-title">Marketing Strategy</h3>
+            <ul class="skill-list">
+                <li>Keyword Research & SEO</li>
+                <li>Content Calendars & Plans</li>
+                <li>Competitive Analysis</li>
+                <li>Go-to-Market Strategy</li>
+            </ul>
+        </div>
+        <div class="skill-category reveal reveal-delay-3">
+            <div class="skill-cat-icon">⚙</div>
+            <h3 class="skill-cat-title">Tools & Platforms</h3>
+            <ul class="skill-list">
+                <li>Analytics — GA, MixPanel, SemRush</li>
+                <li>AI — Claude, ChatGPT, Gemini</li>
+                <li>CRM — HubSpot, Salesforce, Zoho</li>
+                <li>Email — Mailchimp, Kit, Klaviyo</li>
+                <li>Automation — Make, Zapier, n8n</li>
+                <li>Design — Figma, Canva, Adobe</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<!-- ── Projects ── -->
+<section class="projects-section" id="projects">
+    <div class="section-header reveal">
+        <div class="section-label">Selected work</div>
+        <h2 class="section-title">Results that speak<br>for themselves.</h2>
+    </div>
+    <div class="projects-grid">
+
+        <!-- Project 1 -->
+        <div class="project-card reveal" data-case="emergi">
+            <div class="project-info">
+                <div class="project-number">01</div>
+                <h3 class="project-name">User Growth for<br>Emergi Mentors</h3>
+                <p class="project-desc">Built and managed a 65-member Slack community with consistent engagement. Orchestrated virtual events with up to 90 registrants and 52% attendance rate — exceeding the industry average of 40%.</p>
+                <div class="project-tags">
+                    <span class="project-tag">Marketing Strategy</span>
+                    <span class="project-tag">Content Creation</span>
+                    <span class="project-tag">Automation</span>
+                </div>
+                <div class="project-meta">
+                    <div class="project-location">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                        Australia
+                    </div>
+                    <div class="project-read-more">Read case study <span>→</span></div>
+                </div>
+            </div>
+            <div class="project-visual">
+                <div class="project-visual-content">
+                    <div class="project-metric">
+                        <div class="project-metric-value">185</div>
+                        <div class="project-metric-label">Active users in 3 months</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Project 2 -->
+        <div class="project-card reveal" data-case="redcloud">
+            <div class="project-info">
+                <div class="project-number">02</div>
+                <h3 class="project-name">Pre-IPO Content<br>Strategy for RedCloud</h3>
+                <p class="project-desc">Developed high-level messaging and narratives that contributed to a 15% increase in solution inquiries. Created investor-facing content capturing attention from top-level investors across Europe and US.</p>
+                <div class="project-tags">
+                    <span class="project-tag">Marketing Strategy</span>
+                    <span class="project-tag">Content Creation</span>
+                </div>
+                <div class="project-meta">
+                    <div class="project-location">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                        London, United Kingdom
+                    </div>
+                    <div class="project-read-more">Read case study <span>→</span></div>
+                </div>
+            </div>
+            <div class="project-visual">
+                <div class="project-visual-content">
+                    <div class="project-metric">
+                        <div class="project-metric-value">+15%</div>
+                        <div class="project-metric-label">Solution inquiry increase</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Project 3 -->
+        <div class="project-card reveal" data-case="salsa">
+            <div class="project-info">
+                <div class="project-number">03</div>
+                <h3 class="project-name">Award-winning Case<br>Studies for Salsa Digital</h3>
+                <p class="project-desc">Created 10+ detailed case studies, with 3 featured on prestigious state and national awards pages in Australia. Improved organic visibility by 20% through strategic SEO optimization.</p>
+                <div class="project-tags">
+                    <span class="project-tag">Content Creation</span>
+                </div>
+                <div class="project-meta">
+                    <div class="project-location">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                        Australia
+                    </div>
+                    <div class="project-read-more">Read case study <span>→</span></div>
+                </div>
+            </div>
+            <div class="project-visual">
+                <div class="project-visual-content">
+                    <div class="project-metric">
+                        <div class="project-metric-value">+20%</div>
+                        <div class="project-metric-label">Organic visibility increase</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- ── Case Study Overlay ── -->
+<div class="case-overlay" id="caseOverlay">
+    <div class="case-overlay-backdrop" id="caseBackdrop"></div>
+    <div class="case-panel">
+        <div class="case-panel-close">
+            <span class="case-panel-label">Case Study</span>
+            <button class="close-btn" id="caseClose">
+                Close <span style="font-size: 1rem; line-height: 1;">×</span>
+            </button>
+        </div>
+        <div class="case-panel-content" id="casePanelContent">
+            <!-- Injected by JS -->
+        </div>
+    </div>
+</div>
+
+<!-- ── Contact ── -->
+<section class="contact-section" id="contact">
+    <div class="contact-inner reveal">
+        <div class="section-label">Get in touch</div>
+        <h2 class="section-title">Have a project in mind?<br>Let's make it happen.</h2>
+        <p class="contact-desc">
+            I develop strategic content that drives measurable business outcomes. If you're looking for someone to turn your content into a real acquisition channel, let's chat.
+        </p>
+        <a href="mailto:hello@favouryusuf.com" class="contact-btn">
+            Start a conversation
+            <span class="arrow">→</span>
+        </a>
+    </div>
+</section>
+
+<!-- ── Footer ── -->
+<footer>
+    <div class="footer-left">© 2025 Favour Yusuf. All rights reserved.</div>
+    <div class="footer-links">
+        <a href="https://linkedin.com/in/favouryusuf" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="https://twitter.com/favouryusuf" target="_blank" rel="noopener">Twitter</a>
+    </div>
+</footer>
+
+<script>
+    // ── Case study data ──
+    const caseStudies = {
+        emergi: {
+            number: '01',
+            title: 'User Growth for Emergi Mentors',
+            client: 'Emergi Mentors',
+            location: 'Australia',
+            services: ['Marketing Strategy', 'Content Creation', 'Automation'],
+            heroMetric: '185',
+            heroMetricLabel: 'Active users in 3 months',
+            challenge: `Emergi Mentors, an Australian-based mentorship platform, needed to build an engaged community from scratch and drive consistent user growth. The challenge was not just acquiring users — it was creating a self-sustaining ecosystem where mentors and mentees actively participated and returned week after week.`,
+            approach: `I developed a multi-channel content strategy centered around community building. This included launching and managing a Slack community with curated onboarding sequences, creating a content calendar for consistent touchpoints, and orchestrating virtual events designed to convert passive followers into active participants. I also implemented marketing automation workflows to nurture leads through the funnel.`,
+            results: [
+                { value: '185', label: 'Active users acquired' },
+                { value: '65', label: 'Slack community members' },
+                { value: '90', label: 'Event registrants per session' },
+                { value: '52%', label: 'Attendance rate (vs 40% avg)' }
+            ]
+        },
+        redcloud: {
+            number: '02',
+            title: 'Pre-IPO Content Strategy for RedCloud',
+            client: 'RedCloud Technology',
+            location: 'London, United Kingdom',
+            services: ['Marketing Strategy', 'Content Creation'],
+            heroMetric: '+15%',
+            heroMetricLabel: 'Solution inquiry increase',
+            challenge: `RedCloud, a London-based fintech company preparing for a potential IPO, needed content that could speak to two very different audiences simultaneously: enterprise clients evaluating their platform, and institutional investors assessing their market position. The existing content wasn't capturing the company's strategic vision or market opportunity.`,
+            approach: `I created a dual-track content strategy. For the enterprise audience, I developed solution-oriented messaging that clearly articulated RedCloud's value proposition in the open commerce space. For investors, I crafted thought leadership content and market narratives positioning RedCloud as a category leader. Every piece was optimized for SEO to compound visibility over time.`,
+            results: [
+                { value: '+15%', label: 'Solution inquiry increase' },
+                { value: 'EU & US', label: 'Investor attention captured' },
+                { value: 'Pre-IPO', label: 'Content positioning achieved' },
+                { value: 'Dual', label: 'Audience strategy deployed' }
+            ]
+        },
+        salsa: {
+            number: '03',
+            title: 'Award-winning Case Studies for Salsa Digital',
+            client: 'Salsa Digital',
+            location: 'Australia',
+            services: ['Content Creation'],
+            heroMetric: '+20%',
+            heroMetricLabel: 'Organic visibility increase',
+            challenge: `Salsa Digital, a leading Australian digital agency, had an impressive portfolio of government and enterprise projects but lacked the case studies to showcase their impact. They needed compelling narratives that could win awards, drive organic traffic, and serve as sales enablement tools — all at once.`,
+            approach: `I conducted in-depth interviews with project stakeholders and extracted the key metrics and narratives from each engagement. Each case study was structured around the challenge-approach-results framework, optimized for target keywords, and written to meet the stringent criteria of Australian state and national digital awards. I ensured each piece told a story that resonated emotionally while being backed by hard data.`,
+            results: [
+                { value: '10+', label: 'Case studies created' },
+                { value: '3', label: 'Featured on awards pages' },
+                { value: '+20%', label: 'Organic visibility increase' },
+                { value: 'SEO', label: 'Strategic optimization applied' }
+            ]
+        }
+    };
+
+    // ── Case study overlay logic ──
+    const overlay = document.getElementById('caseOverlay');
+    const backdrop = document.getElementById('caseBackdrop');
+    const closeBtn = document.getElementById('caseClose');
+    const panelContent = document.getElementById('casePanelContent');
+
+    function openCase(key) {
+        const cs = caseStudies[key];
+        if (!cs) return;
+
+        panelContent.innerHTML = `
+            <div class="case-hero-metric">
+                <div class="metric-val">${cs.heroMetric}</div>
+                <div class="metric-label">${cs.heroMetricLabel}</div>
+            </div>
+
+            <div class="case-number">${cs.number}</div>
+            <h2 class="case-title">${cs.title}</h2>
+
+            <div class="case-client-info">
+                <div class="case-client-detail">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                    ${cs.client}
+                </div>
+                <div class="case-client-detail">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                    ${cs.location}
+                </div>
+            </div>
+
+            <div class="case-section">
+                <div class="case-section-title">The Challenge</div>
+                <p>${cs.challenge}</p>
+            </div>
+
+            <div class="case-section">
+                <div class="case-section-title">The Approach</div>
+                <p>${cs.approach}</p>
+            </div>
+
+            <div class="case-section">
+                <div class="case-section-title">Key Results</div>
+                <div class="case-results-grid">
+                    ${cs.results.map(r => `
+                        <div class="case-result-card">
+                            <div class="case-result-value">${r.value}</div>
+                            <div class="case-result-label">${r.label}</div>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+
+            <div class="case-section">
+                <div class="case-section-title">Services</div>
+                <div class="case-tags">
+                    ${cs.services.map(s => `<span class="case-tag">${s}</span>`).join('')}
+                </div>
+            </div>
+        `;
+
+        overlay.classList.add('active');
+        document.body.classList.add('overlay-open');
+    }
+
+    function closeCase() {
+        overlay.classList.remove('active');
+        document.body.classList.remove('overlay-open');
+    }
+
+    // Click handlers on project cards
+    document.querySelectorAll('.project-card[data-case]').forEach(card => {
+        card.addEventListener('click', () => {
+            openCase(card.dataset.case);
+        });
+    });
+
+    closeBtn.addEventListener('click', closeCase);
+    backdrop.addEventListener('click', closeCase);
+
+    // Close on Escape
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeCase();
+    });
+
+    // ── Cursor glow ──
+    const glow = document.getElementById('cursorGlow');
+    let mouseX = 0, mouseY = 0, glowX = 0, glowY = 0;
+
+    document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+    });
+
+    function animateGlow() {
+        glowX += (mouseX - glowX) * 0.08;
+        glowY += (mouseY - glowY) * 0.08;
+        glow.style.left = glowX + 'px';
+        glow.style.top = glowY + 'px';
+        requestAnimationFrame(animateGlow);
+    }
+    animateGlow();
+
+    // ── Counter animation ──
+    function animateCounters() {
+        document.querySelectorAll('.counter').forEach(counter => {
+            const target = +counter.dataset.target;
+            const duration = 2000;
+            const start = performance.now();
+
+            function update(now) {
+                const elapsed = now - start;
+                const progress = Math.min(elapsed / duration, 1);
+                const ease = 1 - Math.pow(1 - progress, 3);
+                counter.textContent = Math.round(target * ease);
+                if (progress < 1) requestAnimationFrame(update);
+            }
+            requestAnimationFrame(update);
+        });
+    }
+
+    const heroObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                animateCounters();
+                heroObserver.disconnect();
+            }
+        });
+    }, { threshold: 0.3 });
+
+    heroObserver.observe(document.querySelector('.hero'));
+
+    // ── Scroll reveal ──
+    const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
+
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+    // ── Mobile nav ──
+    const navToggle = document.getElementById('navToggle');
+    const navLinks = document.getElementById('navLinks');
+
+    navToggle.addEventListener('click', () => {
+        navToggle.classList.toggle('active');
+        navLinks.classList.toggle('open');
+    });
+
+    navLinks.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+            navToggle.classList.remove('active');
+            navLinks.classList.remove('open');
+        });
+    });
+
+    // ── Smooth scroll for nav links ──
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        });
+    });
+
+    // ── Magnetic hover on CTA buttons ──
+    document.querySelectorAll('.contact-btn, .nav-cta').forEach(btn => {
+        btn.addEventListener('mousemove', (e) => {
+            const rect = btn.getBoundingClientRect();
+            const x = e.clientX - rect.left - rect.width / 2;
+            const y = e.clientY - rect.top - rect.height / 2;
+            btn.style.transform = `translate(${x * 0.15}px, ${y * 0.15}px) scale(1.05)`;
+        });
+        btn.addEventListener('mouseleave', () => {
+            btn.style.transform = '';
+        });
+    });
+
+    // ── Nav background on scroll ──
+    let lastScroll = 0;
+    window.addEventListener('scroll', () => {
+        const nav = document.querySelector('nav');
+        const scroll = window.scrollY;
+        if (scroll > 100) {
+            nav.style.borderBottomColor = 'rgba(201, 255, 87, 0.08)';
+        } else {
+            nav.style.borderBottomColor = 'var(--border)';
+        }
+        lastScroll = scroll;
+    });
+</script>
+
+</body>
+</html>
